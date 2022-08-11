@@ -29,6 +29,7 @@ github_username:  TCIano
 
 # Build settings
 theme: jekyll-theme-modernist
+
 plugins:
   - jekyll-feed
 
