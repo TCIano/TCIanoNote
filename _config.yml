@@ -22,7 +22,7 @@ title: 个人博客
 email: 740409310@qq.com
 description: >- # this means to ignore newlines until "baseurl:"
  在这里我即将开始一段新的旅程，和个位一起摸爬滚打，探索代码世界。
-baseurl: "TCIaon-up.github.io" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://TCIaon-up.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: TCIano-up
 github_username:  TCIano
