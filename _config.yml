@@ -28,7 +28,7 @@ twitter_username: TCIano-up
 github_username:  TCIano
 
 # Build settings
-theme: minima
+theme: jekyll-theme-modernist
 plugins:
   - jekyll-feed
 
