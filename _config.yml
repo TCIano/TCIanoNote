@@ -29,6 +29,9 @@ github_username:  TCIano
 
 # Build settings
 theme: minima
+
+
+
 plugins:
   - jekyll-feed
 
