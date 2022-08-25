@@ -120,11 +120,11 @@ props:['value']
 
 1. 同步流程
 
-通过 $store 的 commit 触发 mutations 中的事件 ，修改 state 中的 数据
++ 通过 $store 的 commit 触发 mutations 中的事件 ，修改 state 中的 数据。
 
 2. 异步流程
 
-通过 $store 的 dispatch 触发 actions 中的事件，再用 context中的commit 提交给 mutations 从而修改 state 中的数据
++ 通过 $store 的 dispatch 触发 actions 中的事件，再用 context中的commit 提交给 mutations 从而修改 state 中的数据。
 
 
 ### 🔺简单谈谈vuex
