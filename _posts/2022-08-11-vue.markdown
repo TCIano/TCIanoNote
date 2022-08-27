@@ -158,6 +158,8 @@ props:['value']
    缺点：会频繁的删除和创建dom元素，增加了性能负担，v-if有更高的切换开销
    应用场景：如果元素很少改变，或者组件需要重新触发生命周期，或者首次元素为隐藏。
 
+
+
 ### $route  和 $router 的区别
 
 1. route 是当前路由信息，可以获取到当前路由地址（path）参数（params，query）等等。$ route是一个跳转的路由对象（路由信息对象），每一个路由都会有一个$route对象，是一个局部的对象。
@@ -175,7 +177,10 @@ props:['value']
 - 通过定义一个环境变量（不同环境下定义一个同名数据，在不同环境下值不同）来实现工程化的切换生成/测试/开发所用到的基准地址。
 
 ### vue封装组件的思想
-+ 本质上就是利用父传子，props，slot，根据组件的样式，结果，和逻辑，尽可能的实现较高的复用性。
++ 准备结构:结构考虑复用灵活,一般使用插槽允许自定义
++ 组件的样式:考虑样式支持自定义,一般使用属性传值(有可能是样式,通过类名)
++ 组件的数据: 通过数据传递
++ 逻辑,事件,:例如弹框组件,点击遮罩弹框关闭,用户使用组件的时候,也需要监听到点击遮罩的行为,用户想进行自定义的逻辑,
 
 ### $nextTick
 作用：用来数据更新后，开始触发，更新视图。
@@ -240,4 +245,84 @@ props:['value']
 + methods、components和directives，将被合并为同一个对象，两个对象键名冲出时，以组件对象的键值为主。
 
 
+## ❗数据响应式
 
+### 1. 概念
+
++ 数据发生变化，使用数据的地方就会进行同步更新。
+
+### 2. 响应式核心
+
+​	`Object.defineProperty`：可对对象进行属性定义内部有：
+
++ set（），数据**变化**会触发
++ get（），数据**读取**会触发
+
+### 3. 劫持数据
+
++ 要通过一个数据进行周转，如果还用原数据进行set或者get的话会导致堆栈溢出。
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <p id="name"></p>
+      <p id="age"></p>
+    </div>
+    <script>
+      // 定义数据
+      const data = {
+        name: '张三',
+        age: 19
+      }
+
+      // 同步视图的方法
+      function setView() {
+        document.getElementById('name').innerHTML = data.name
+        document.getElementById('age').innerHTML = data.age
+      }
+      setView()
+
+      // 利用循环对数据进行监听
+      Object.keys(data).forEach(key => {
+        // 利用外部数据进行数据的读写控制
+        let getValue = data[key]
+        Object.defineProperty(data, key, {
+          // 读数据
+          get() {
+            return getValue
+          },
+          // 写数据
+          set(val) {
+            getValue = val
+            setView()
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
+```
+
++ `Object.defineProperty`**一次只能劫持一个数据**，所以源码中需要对数据进行循环遍历 劫持，类似于递归的方式对所有的数据进行劫持。
++ **对象新增的数据是无法劫持到的**，因为新增数据的操作是在本次数据劫持之后。所以对象新增的数据也就不是响应式的了，可以通过 `this.$set()`添加响应式属性来解决。
++ 通过数组的下标修改数据，通过 `Object.defineProperty` 是可以劫持到的，但是vue中因为性能和用户体验的关系，取消了vue中检测数据下标变化。
++ 但是数组的7个方法是响应式的原因是因为vue中对7个方法进行重写了，并不是完全重写，它是利用了切面编程的思想，对方法今夕封装以及逻辑的处理，最终还是调用了原始的方法。
+
+
+
+### 4. 观察者模式
+
++ 是一对多的数据依赖关系和发布订阅模式的不同在于，**没有调度中心**，被观察者和观察者**直接通信**，观察者内部会有 update 方法进行消息更新，被观察者会有 add 收集观察者，通过notify方法通知所有观察者，调用 update 方法更新观察者收到的信息。
++ vue 的源码中，通过 get 进行依赖的收集，会给每个数据添加一个 watcher 观察者（每一个watcher）对应的就是一个组件。通过 set 在数据变化时通知观察者（组件），然后生成虚拟DOM，进行新旧DOM对比，最后渲染页面。
+
+![img](https://v2.cn.vuejs.org/images/data.png)
