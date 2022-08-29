@@ -109,13 +109,13 @@ props:['value']
   //父组件
   @update:属性名1 = “对象.属性1 = 新值”
   @update:属性名2 = “对象.属性2 = 新值”
-
+  
   //子组件
   $emit('update:属性名1',新值);
   $emit('update:属性名2',新值);
   ```
 
-  ​
+  
 
 ### computed 和 watch的区别
 
@@ -333,3 +333,4 @@ props:['value']
 + vue 的源码中，通过 get 进行依赖的收集，会给每个数据添加一个 watcher 观察者（每一个watcher）对应的就是一个组件。通过 set 在数据变化时通知观察者（组件），然后生成虚拟DOM，进行新旧DOM对比，最后渲染页面。
 
 ![img](https://v2.cn.vuejs.org/images/data.png)
+
