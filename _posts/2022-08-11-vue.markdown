@@ -337,7 +337,9 @@ props:['value']
 
 
 
-![123](https://tciano.github.io/assets/img/data.png)
+![123](https://cdn.jsdelivr.net/gh/TCIano/blog_img/data.png)
+
+
 
 
 
