@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: Vue
 title:  "Vue笔记"
 date:   2022-08-11 11:52:51 +0800
 categories: Vue
