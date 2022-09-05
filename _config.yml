@@ -35,6 +35,11 @@ theme: minima
 plugins:
   - jekyll-feed
 
+baidu:
+    id: ce30de2f3c2b222a1488070b9df602f8
+
+highlighter: rouge
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
